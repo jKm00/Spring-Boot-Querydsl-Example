@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 /**
  * Generates an entity manager that can be used for custom queries
+ * TODO: Useless, should be removed. Onlu keeping it in case we need it in the
+ * future. View user service to see how to get entity manager
  */
 @Service
 public class RepositoryHelper {

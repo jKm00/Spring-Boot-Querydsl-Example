@@ -6,7 +6,9 @@ Spring boot project with two models `user` and `role` that has a many to many re
 
 Accessing /users will return all users. Adding filters like `firstName=name` will filter the users by first name. Any filters equal to the fields of the model is accepted.
 
-Accessing /users/admin will return all admins. Adding filters still works:)
+To filter by role use filter `role.roleName=role`, e.g. `role.roleName=admin`
+
+User repository contains example on how to use JPAQuery together with predicates so you get the best of both worlds.
 
 ## Setup for dev
 

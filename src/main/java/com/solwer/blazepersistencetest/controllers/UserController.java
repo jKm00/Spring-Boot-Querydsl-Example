@@ -23,8 +23,8 @@ public class UserController {
     return userService.getAll(predicate);
   }
 
-  @GetMapping("/admin")
-  public List<User> getAllRoles(Predicate predicate) {
-    return this.userService.getAdmins(predicate);
+  @GetMapping("/test")
+  public List<User> test(Predicate predicate) {
+    return userService.test(predicate);
   }
 }
