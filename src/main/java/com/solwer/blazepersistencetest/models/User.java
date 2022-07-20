@@ -1,5 +1,6 @@
 package com.solwer.blazepersistencetest.models;
 
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -40,6 +41,9 @@ public class User {
   @Column(name = "age")
   private int age;
 
+  @Column(name = "created_at")
+  private Date creationDate;
+
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(name = "user_role",
           joinColumns = @JoinColumn(name = User.PRIMARY_KEY),
@@ -49,11 +53,12 @@ public class User {
 
   public User() {}
 
-  public User(String firstName, String lastName, String email, int age) {
+  public User(String firstName, String lastName, String email, int age, Date creationDate) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.age = age;
+    this.creationDate = creationDate;
   }
 
   public void addRole(Role role) {
@@ -107,5 +112,13 @@ public class User {
 
   public void setRoles(Set<Role> roles) {
     this.roles = roles;
+  }
+
+  public Date getCreationDate() {
+    return creationDate;
+  }
+
+  public void setCreationDate(Date creationDate) {
+    this.creationDate = creationDate;
   }
 }

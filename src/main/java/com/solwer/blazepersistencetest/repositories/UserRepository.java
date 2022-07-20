@@ -1,6 +1,9 @@
 package com.solwer.blazepersistencetest.repositories;
 
+// import java.util.ArrayList;
 import java.util.List;
+// import java.util.regex.Matcher;
+// import java.util.regex.Pattern;
 
 import javax.persistence.EntityManager;
 
@@ -11,6 +14,8 @@ import org.springframework.data.querydsl.binding.QuerydslBindings;
 import org.springframework.data.querydsl.binding.SingleValueBinding;
 import org.springframework.stereotype.Repository;
 
+import com.blazebit.persistence.CriteriaBuilder;
+import com.blazebit.persistence.CriteriaBuilderFactory;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.StringExpression;
 import com.querydsl.core.types.dsl.StringPath;
@@ -50,5 +55,41 @@ public interface UserRepository extends
           .where(QUser.user.roles.any().eq(role))
           .where(predicate)
           .fetch();
+    }
+
+    /**
+     * Testing blaze query
+     */
+    default List<User> firstBlazeQuery(Predicate predicate, EntityManager em, CriteriaBuilderFactory cbf) {
+      // Does not work, but keeping it here for reference
+      /*
+       * List<String> params = new ArrayList<>();
+       * 
+       * Pattern regex = Pattern.compile("\\((.*?)\\)");
+       * Matcher regexMatcher = regex.matcher(predicate.toString());
+       * 
+       * while (regexMatcher.find()) {
+       * params.add(regexMatcher.group(1));
+       * }
+       * 
+       * CriteriaBuilder<User> cb = cbf.create(em, User.class);
+       * 
+       * for (String param : params) {
+       * String[] paramSplit = param.split(",");
+       * cb.where(paramSplit[0]).like().value(paramSplit[1]);
+       * }
+       * 
+       * cb.orderByAsc("user.lastName")
+       * .orderByAsc("user.firstName");
+       */
+
+      // Selected every user with age betweem 15 amd 20 ordering by last name and
+      // first name
+      CriteriaBuilder<User> cb = cbf.create(em, User.class, "u")
+          .where("u.age").betweenExpression("15").andExpression("20")
+          .orderByAsc("u.lastName")
+          .orderByAsc("u.firstName");
+
+      return cb.getResultList();
     }
 }

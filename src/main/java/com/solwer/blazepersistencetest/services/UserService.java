@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
 
+import com.blazebit.persistence.CriteriaBuilderFactory;
 import com.querydsl.core.types.Predicate;
+import com.solwer.blazepersistencetest.configs.BlazePersistenceConfiguartion;
 import com.solwer.blazepersistencetest.models.Role;
 import com.solwer.blazepersistencetest.models.User;
 import com.solwer.blazepersistencetest.repositories.UserRepository;
@@ -20,6 +22,9 @@ public class UserService {
   private UserRepository userRepository;
   @Autowired
   private RoleService roleService;
+
+  @Autowired
+  private BlazePersistenceConfiguartion blazePersistenceConfiguartion;
 
   @PersistenceContext
   private EntityManager entityManager;
@@ -59,5 +64,11 @@ public class UserService {
     Role admin = this.roleService.get("ADMIN");
 
     return this.userRepository.getUserByRole(predicate, admin, entityManager);
+  }
+
+  public List<User> firstBlazeQuery(Predicate predicate) {
+    CriteriaBuilderFactory cbf = this.blazePersistenceConfiguartion.createCriteriaBuilderFactory();
+
+    return this.userRepository.firstBlazeQuery(predicate, entityManager, cbf);
   }
 }
