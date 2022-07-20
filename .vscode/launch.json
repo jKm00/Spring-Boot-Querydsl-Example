@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-BlazePersistenceTestApplication<blaze-persistence-test>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.solwer.blazepersistencetest.BlazePersistenceTestApplication",
+      "projectName": "blaze-persistence-test",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}

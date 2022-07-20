@@ -1,6 +1,9 @@
 package com.solwer.blazepersistencetest;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,25 +52,32 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
       roleService.add(admin);
       roleService.add(user);
 
-      User joakim = new User("Joakim", "Edvardsen", "joakim@edvardsen.com", 22);
-      User petter = new User("Petter", "Molnes", "petter@molnes.com", 22);
-      User hans = new User("Hans", "Hansen", "hans@hansen.com", 23);
-      User halvard = new User("Halvard", "Halvardsen", "halvard@halvardsen.com", 22);
+      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
-      joakim.addRole(user);
-      joakim.addRole(admin);
+      try {
+        User joakim = new User("Joakim", "Edvardsen", "joakim@edvardsen.com", 12, formatter.parse("2020-01-01"));
+        User petter = new User("Petter", "Molnes", "petter@molnes.com", 17, formatter.parse("2021-05-13"));
+        User hans = new User("Hans", "Hansen", "hans@hansen.com", 19, formatter.parse("2021-08-15"));
+        User halvard = new User("Halvard", "Halvardsen", "halvard@halvardsen.com", 22, formatter.parse("2022-02-28"));
 
-      petter.addRole(user);
+        joakim.addRole(user);
+        joakim.addRole(admin);
 
-      hans.addRole(user);
+        petter.addRole(user);
 
-      halvard.addRole(user);
-      halvard.addRole(admin);
+        hans.addRole(user);
 
-      userService.add(joakim);
-      userService.add(petter);
-      userService.add(hans);
-      userService.add(halvard);
+        halvard.addRole(user);
+        halvard.addRole(admin);
+
+        userService.add(joakim);
+        userService.add(petter);
+        userService.add(hans);
+        userService.add(halvard);
+
+      } catch (ParseException e) {
+        logger.error("Failed to parse date: " + e.getMessage());
+      }
 
       logger.info("Dummy data added, {} users in database", userService.size());
     } else {

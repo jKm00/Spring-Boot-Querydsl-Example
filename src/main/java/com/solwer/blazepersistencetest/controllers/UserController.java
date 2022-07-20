@@ -27,4 +27,9 @@ public class UserController {
   public List<User> test(Predicate predicate) {
     return userService.test(predicate);
   }
+
+  @GetMapping("/first-blaze-query")
+  public List<User> firstBlazeQuery(Predicate predicate) {
+    return userService.firstBlazeQuery(predicate);
+  }
 }
