@@ -4,8 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.binding.QuerydslBindings;
+import org.springframework.data.querydsl.binding.SingleValueBinding;
 
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.StringExpression;
+import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.hibernate.HibernateQueryFactory;
 import com.solwer.blazepersistencetest.models.Book;
 import com.solwer.blazepersistencetest.models.QBook;
@@ -20,11 +24,13 @@ public class BookRepositoryImpl implements BookRepository {
   @Autowired
   private QBook qBook = QBook.book;
 
+  // Default/simple jpa queries
   @Override
   public List<Book> findAll() {
     return this.jpaRepository.findAll();
   }
 
+  // Sql statements using query factory
   @Override
   public Book findById(Long id) {
     return this.queryFactory.from(qBook)
@@ -40,6 +46,13 @@ public class BookRepositoryImpl implements BookRepository {
       .fetchOne();
   }
 
-  public interface BookRepositoryJpa extends JpaRepository<Book, Long> {}
-  
+  // Create custom bindings
+  @Override
+  public void customize(QuerydslBindings bindings, QBook book) {
+    bindings.bind(String.class).first(
+      (SingleValueBinding<StringPath, String>) StringExpression::containsIgnoreCase
+    );
+  }
+
+  public interface BookRepositoryJpa extends JpaRepository<Book, Long> {}  
 }
