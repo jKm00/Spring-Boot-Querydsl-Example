@@ -38,7 +38,7 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
 
     StringPath str = QUser.user.firstName;
     Predicate predicate = str.contains("Joakim");
-    
+
     List<User> users = userService.getAll(predicate);
 
     // Check if databse is populated with dummy data
@@ -83,7 +83,7 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
     } else {
       logger.info("Data already imported...");
     }
- 
+
   }
-  
+
 }

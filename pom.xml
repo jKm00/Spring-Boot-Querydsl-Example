@@ -53,6 +53,8 @@
 		<dependency>
 			<groupId>com.querydsl</groupId>
 			<artifactId>querydsl-apt</artifactId>
+			<version>${querydsl.version}</version>
+			<classifier>jpa</classifier>
 			<scope>provided</scope>
 		</dependency>
   <!-- Blaze persistence -->
@@ -84,7 +86,7 @@
 	</dependencies>
 
 	<build>
-  <plugins>
+  	<plugins>
       <plugin>
 				<groupId>com.mysema.maven</groupId>
 				<artifactId>apt-maven-plugin</artifactId>
@@ -95,14 +97,21 @@
 							<goal>process</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>target/generated-sources/annotations</outputDirectory>
-							<processor>com.querydsl.apt.QuerydslAnnotationProcessor</processor>
+							<includes>
+								<!-- Where the models are -->
+								<include>models.**</include>
+								<include> package.models.**</include>
+							</includes>
 						</configuration>
 					</execution>
 				</executions>
+				<configuration>
+					<outputDirectory>target/generated-sources/annotations</outputDirectory>
+					<processors>
+						<processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
+					</processors>
+				</configuration>
 			</plugin>
-
-
 		</plugins>
 	</build>
 
