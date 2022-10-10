@@ -1,4 +1,4 @@
-package com.solwer.blazepersistencetest.repositories;
+package com.solwer.blazepersistencetest.repositories.author;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

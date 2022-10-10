@@ -36,13 +36,11 @@ public class Book {
   private Date releaseYear;
 
   @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(name = "book_author",
-    joinColumns = @JoinColumn(name = Book.PRIMARY_KEY),
-    inverseJoinColumns = @JoinColumn(name = Author.PRIMARY_KEY)
-  )
+  @JoinTable(name = "book_author", joinColumns = @JoinColumn(name = Book.PRIMARY_KEY), inverseJoinColumns = @JoinColumn(name = Author.PRIMARY_KEY))
   private Set<Author> authors = new LinkedHashSet<>();
 
-  public Book() {}
+  public Book() {
+  }
 
   public Book(String title, Date releaseYear) {
     this.title = title;
@@ -51,6 +49,7 @@ public class Book {
 
   public void addAuthor(Author author) {
     this.authors.add(author);
+    author.addBook(this);
   }
 
   // Getters and setters
@@ -68,5 +67,9 @@ public class Book {
 
   public void setReleaseYear(Date releaseYear) {
     this.releaseYear = releaseYear;
+  }
+
+  public Set<Author> getAuthors() {
+    return this.authors;
   }
 }

@@ -14,9 +14,13 @@ import org.springframework.stereotype.Component;
 
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.StringPath;
+import com.solwer.blazepersistencetest.models.Author;
+import com.solwer.blazepersistencetest.models.Book;
 import com.solwer.blazepersistencetest.models.QUser;
 import com.solwer.blazepersistencetest.models.Role;
 import com.solwer.blazepersistencetest.models.User;
+import com.solwer.blazepersistencetest.services.AuthorService;
+import com.solwer.blazepersistencetest.services.BookService;
 import com.solwer.blazepersistencetest.services.RoleService;
 import com.solwer.blazepersistencetest.services.UserService;
 
@@ -30,6 +34,10 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
   private UserService userService;
   @Autowired
   private RoleService roleService;
+  @Autowired
+  private BookService bookService;
+  @Autowired
+  private AuthorService authorService;
 
   private final Logger logger = LoggerFactory.getLogger("DummyInit");
 
@@ -74,6 +82,14 @@ public class DummyDataInitializer implements ApplicationListener<ApplicationRead
         userService.add(petter);
         userService.add(hans);
         userService.add(halvard);
+
+        Book book1 = new Book("Computer Science", formatter.parse("2020-01-01"));
+        Author author1 = new Author("Joakim Edvardsen");
+
+        book1.addAuthor(author1);
+
+        authorService.add(author1);
+        bookService.add(book1);
 
       } catch (ParseException e) {
         logger.error("Failed to parse date: " + e.getMessage());

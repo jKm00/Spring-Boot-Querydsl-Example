@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.querydsl.core.annotations.QueryEntity;
 
 @Entity
@@ -29,12 +30,24 @@ public class Author {
   @Column(name = "name")
   private String name;
 
+  @JsonIgnore
   @ManyToMany(mappedBy = "authors", fetch = FetchType.LAZY)
   private Set<Book> books = new LinkedHashSet<>();
 
+  public Author() {
+  }
+
+  public Author(String name) {
+    this.name = name;
+  }
+
+  public Author(String name, Set<Book> books) {
+    this.name = name;
+    this.books = books;
+  }
+
   public void addBook(Book book) {
     this.books.add(book);
-    book.addAuthor(this);
   }
 
   // Getters and setters

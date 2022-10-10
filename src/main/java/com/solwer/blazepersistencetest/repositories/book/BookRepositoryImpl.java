@@ -1,4 +1,4 @@
-package com.solwer.blazepersistencetest.repositories;
+package com.solwer.blazepersistencetest.repositories.book;
 
 import java.util.List;
 
@@ -30,18 +30,9 @@ public class BookRepositoryImpl implements BookRepository {
     return this.jpaRepository.findAll();
   }
 
-  // Sql statements using query factory
   @Override
-  public Book findById(Long id) {
-    return this.queryFactory.from(qBook)
-        .select(
-            Projections.constructor(
-                Book.class,
-                qBook.id,
-                qBook.title,
-                qBook.releaseYear))
-        .where(qBook.id.eq(id))
-        .fetchOne();
+  public void save(Book book) {
+    this.jpaRepository.save(book);
   }
 
   // Create custom bindings

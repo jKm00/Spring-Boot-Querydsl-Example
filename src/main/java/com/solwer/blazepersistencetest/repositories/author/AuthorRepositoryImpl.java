@@ -1,7 +1,8 @@
-package com.solwer.blazepersistencetest.repositories;
+package com.solwer.blazepersistencetest.repositories.author;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslBindings;
 import org.springframework.data.querydsl.binding.SingleValueBinding;

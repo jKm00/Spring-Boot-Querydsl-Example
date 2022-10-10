@@ -1,4 +1,4 @@
-package com.solwer.blazepersistencetest.repositories;
+package com.solwer.blazepersistencetest.repositories.book;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
