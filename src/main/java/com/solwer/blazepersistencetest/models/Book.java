@@ -47,6 +47,12 @@ public class Book {
     this.releaseYear = releaseYear;
   }
 
+  public Book(Long id, String title, Date releaseYear) {
+    this.id = id;
+    this.title = title;
+    this.releaseYear = releaseYear;
+  }
+
   public void addAuthor(Author author) {
     this.authors.add(author);
     author.addBook(this);
